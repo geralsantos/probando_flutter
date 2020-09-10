@@ -34,6 +34,13 @@ dependencies:
   rflutter_alert: ^1.0.2
   intl: ^0.16.1
   timezone: ^0.5.7
+  get: ^3.4.6
+  styled_widget: ^0.2.1+2
+  connectivity: ^0.4.9+2
+  package_info: ^0.4.1
+  data_connection_checker: ^0.3.4
+  fluttertoast: ^7.0.4
+  flutter_swiper: ^1.1.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

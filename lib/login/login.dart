@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
 import 'package:probando_flutter/app/Services/Login/LoginService.dart';
@@ -7,8 +9,13 @@ import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:probando_flutter/utils/flutter/Utils.dart';
 import 'package:probando_flutter/utils/dart/sharedPreferences.dart';
+import 'package:probando_flutter/utils/dart/checkInternet.dart';
+import 'package:probando_flutter/utils/dart/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 sharedPreferences sharedPrefs = new sharedPreferences();
+CheckInternet checkInternet = new CheckInternet();
+UtilToast toast = new UtilToast();
 
 class LoginThreePage extends StatefulWidget {
   LoginThreePage({Key key}) : super(key: key);
@@ -20,6 +27,7 @@ class _LoginThreePageState extends State<LoginThreePage> {
   Utils utils = new Utils();
   BuildContext context;
   bool _showLoader = false, _showDialogResponse = false;
+  bool passwordObscure = true;
   String usuario = "", contrasena = "";
   @override
   void initState() {
@@ -31,13 +39,12 @@ class _LoginThreePageState extends State<LoginThreePage> {
     await sharedPrefs.open();
   }
 
-  void _loginService(BuildContext _context) {
+  void _loginService(BuildContext _context) async {
     //String title,String description,String btnOk
+
     utils.dialogLoadingData(
         Icons.check_circle, Colors.green, "Cargando...", _context);
     loginService(usuario, contrasena).then((onValue) {
-      print("onValue");
-      print(onValue);
       utils.cerrarDialogGlobal(_context);
       if (onValue["status"] != false) {
         var data = onValue["dataUsuario"];
@@ -48,8 +55,8 @@ class _LoginThreePageState extends State<LoginThreePage> {
       utils.showDialogResponse(_context, onValue["mensaje"].toString(), null,
           "Cerrar", AlertType.error);
     }).catchError((e) {
-      print(e);
-      //utils.showDialogResponse(_context,"Error","Ha ocurrido un error: ","Cerrar",Icons.error);
+      print("geraaaa");
+      toast.showToast("No se estableció la conexión.", _context);
     });
   }
 
@@ -113,6 +120,9 @@ class _LoginThreePageState extends State<LoginThreePage> {
                         child: Image.asset('assets/images/lgsoftware.png'),
                       ),
                     ),
+                    SizedBox(
+                      height: 50,
+                    ),
                     Card(
                       margin: EdgeInsets.only(left: 30, right: 30, top: 30),
                       elevation: 11,
@@ -163,20 +173,28 @@ class _LoginThreePageState extends State<LoginThreePage> {
                             contrasena = val;
                           });
                         },
-                        obscureText: true,
+                        obscureText: passwordObscure,
                         style: TextStyle(fontWeight: FontWeight.bold),
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.lock,
                               color: Colors.black26,
                             ),
-                            suffixIcon: Icon(
-                              (contrasena.isEmpty
+                            suffixIcon: IconButton(
+                              onPressed: () => {
+                                if (!contrasena.isEmpty)
+                                  {
+                                    setState(() {
+                                      passwordObscure = !passwordObscure;
+                                    })
+                                  }
+                              },
+                              icon: Icon(contrasena.isEmpty
                                   ? Icons.error_outline
-                                  : Icons.check_circle),
+                                  : (passwordObscure ? Icons.visibility_off : Icons.visibility)),
                               color: contrasena.isEmpty
                                   ? Colors.red
-                                  : Colors.green,
+                                  : Colors.black45,
                             ),
                             hintText: "Contraseña",
                             hintStyle: TextStyle(
@@ -195,14 +213,18 @@ class _LoginThreePageState extends State<LoginThreePage> {
                     ),
                     Container(
                       width: double.infinity,
-                      padding:
-                          EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0,bottom: 20),
+                      padding: EdgeInsets.only(
+                          top: 30.0, right: 30.0, left: 30.0, bottom: 20),
                       child: RaisedButton(
-
                         padding: EdgeInsets.symmetric(vertical: 16.0),
                         color: Colors.pink,
-                        onPressed: () {
-                          _loginService(context);
+                        onPressed: () async {
+                          if (!(await checkInternet.accessInternet())) {
+                            toast.showToast(
+                                "No hay conexión a internet.", context);
+                          } else {
+                            _loginService(context);
+                          }
                         },
                         elevation: 11,
                         shape: RoundedRectangleBorder(

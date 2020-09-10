@@ -1,9 +1,10 @@
 import 'package:probando_flutter/app_theme.dart';
-import 'package:probando_flutter/pages/Inicio.dart';
-import 'package:probando_flutter/vistas/components/custom_drawer/drawer_user_controller.dart';
-import 'package:probando_flutter/pages/HorarioClases.dart';
-import 'package:probando_flutter/vistas/components/custom_drawer/home_drawer.dart';
+import 'package:probando_flutter/pages/Inicio/Inicio.dart';
+import 'package:probando_flutter/pages/components/CustomeDrawer/drawer_user_controller.dart';
+import 'package:probando_flutter/pages/Calendario/HorarioClases.dart';
+import 'package:probando_flutter/pages/components/CustomeDrawer/home_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:probando_flutter/app/Services/GpsLocation.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -13,14 +14,22 @@ class NavigationHomeScreen extends StatefulWidget {
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget screenView;
   int drawerIndex;
+  String geoLocation = "", geoLocation2 = "";
 
   @override
   void initState() {
     drawerIndex = 0;
     screenView =  Inicio();
+    _getLocation();
     super.initState();
   }
 
+  Future _getLocation() async {
+    geoLocation = await getLocation();
+    setState(() {
+      geoLocation2 = geoLocation;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,12 +65,12 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case 1:
           setState(() {
-            //screenView =  Inicio();
+            screenView = const HorarioClases();
           });
           break;
         case 2:
           setState(() {
-            screenView = const HorarioClases();
+            //screenView = const HorarioClases();
           });
           break;
         case 3:

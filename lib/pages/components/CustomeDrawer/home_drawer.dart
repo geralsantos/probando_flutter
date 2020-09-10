@@ -39,7 +39,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 
   Future setdDrawerListArray() async {
-    print("qeqweqwe");
     usuario = json.decode(await sharedPrefs.read("dataUsuario", ""))["nombres"];
     setState(() {
       usuario = usuario;
@@ -55,38 +54,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ));
           });
         }
-       
       }
     });
-     /* setState(() {
-      drawerList = <DrawerList>[
-      DrawerList(
-        index: 0,
-        labelName: 'Perfíl',
-        icon: Icon(Icons.person),
-      ),
-      DrawerList(
-        index: 1,
-        labelName: 'Calendario',
-        icon: Icon(Icons.calendar_today),
-      ),
-      DrawerList(
-        index: 2,
-        labelName: 'Cursos',
-        icon: Icon(Icons.school),
-      ),
-      DrawerList(
-        index: 3,
-        labelName: 'Evaluaciones',
-        icon: Icon(Icons.share),
-      ),
-      DrawerList(
-        index: 4,
-        labelName: 'Ayuda',
-        icon: Icon(Icons.help_outline),
-      )
-    ];
-    });*/
   }
 
   @override
@@ -249,17 +218,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Container(
                     width: 6.0,
                     height: 46.0,
-                    // decoration: BoxDecoration(
-                    //   color: widget.screenIndex == listData.index
-                    //       ? Colors.blue
-                    //       : Colors.transparent,
-                    //   borderRadius: new BorderRadius.only(
-                    //     topLeft: Radius.circular(0),
-                    //     topRight: Radius.circular(16),
-                    //     bottomLeft: Radius.circular(0),
-                    //     bottomRight: Radius.circular(16),
-                    //   ),
-                    // ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(4.0),

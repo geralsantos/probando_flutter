@@ -1,7 +1,6 @@
 import 'package:probando_flutter/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:probando_flutter/app/Services/GpsLocation.dart';
-import 'package:probando_flutter/pages/components/tableCalendar.dart';
+import 'package:probando_flutter/pages/components/TableCalendar.dart';
 
 class HorarioClases extends StatefulWidget {
   const HorarioClases({Key key}) : super(key: key);
@@ -13,13 +12,11 @@ class HorarioClases extends StatefulWidget {
 class _MyHomePageState extends State<HorarioClases> with TickerProviderStateMixin {
   //AnimationController animationController;
   bool multiple = true;
-  String geoLocation = "", geoLocation2 = "";
 
   @override
   void initState() {
    /* animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);*/
-    _getLocation();
     
     super.initState();
   }
@@ -30,12 +27,6 @@ class _MyHomePageState extends State<HorarioClases> with TickerProviderStateMixi
     return true;
   }
 
-  Future _getLocation() async {
-    geoLocation = await getLocation();
-    setState(() {
-      geoLocation2 = geoLocation;
-    });
-  }
 
   @override
   void dispose() {
@@ -149,30 +140,6 @@ class _MyHomePageState extends State<HorarioClases> with TickerProviderStateMixi
               ),
             ),
           ),
-          /*Padding(
-            padding: const EdgeInsets.only(top: 8, right: 8),
-            child: Container(
-              width: AppBar().preferredSize.height - 8,
-              height: AppBar().preferredSize.height - 8,
-              color: Colors.white,
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius:
-                      BorderRadius.circular(AppBar().preferredSize.height),
-                  child: Icon(
-                    multiple ? Icons.dashboard : Icons.view_agenda,
-                    color: AppTheme.dark_grey,
-                  ),
-                  onTap: () {
-                    setState(() {
-                      multiple = !multiple;
-                    });
-                  },
-                ),
-              ),
-            ),
-          ),*/
         ],
       ),
     );

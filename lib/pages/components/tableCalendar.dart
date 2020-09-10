@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:probando_flutter/app/Models/Clases.dart';
 import 'package:probando_flutter/app/Services/Calendario/CalendarioService.dart';
-import 'package:probando_flutter/vistas/ListadoClases.dart';
+import 'package:probando_flutter/pages/components/ListadoClases.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 DateTime today = DateTime.now();

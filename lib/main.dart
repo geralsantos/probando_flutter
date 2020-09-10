@@ -1,15 +1,16 @@
 import 'dart:io';
+import 'package:get/route_manager.dart';
 import 'package:probando_flutter/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:probando_flutter/login/login.dart';
 import 'package:probando_flutter/login/onboardingScreen/onboarding.dart';
 import 'package:probando_flutter/login/splash_screen.dart';
-import 'package:probando_flutter/pages/components/tableCalendar.dart';
-import 'package:probando_flutter/pages/inicio.dart';
+import 'package:probando_flutter/pages/Inicio/Inicio.dart';
+import 'package:probando_flutter/pages/components/TableCalendar.dart';
 import 'package:probando_flutter/utils/dart/sharedPreferences.dart'; 
 import 'navigation.dart';
-import 'package:probando_flutter/vistas/ListadoClases.dart';
+import 'package:probando_flutter/pages/components/ListadoClases.dart';
 import 'package:intl/intl.dart'; 
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -71,7 +72,7 @@ class _MyAppState  extends State<MyApp> {
       systemNavigationBarDividerColor: Colors.grey,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -85,8 +86,6 @@ class _MyAppState  extends State<MyApp> {
       home: FutureBuilder(
         future: cargarData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          print("snapshot.data");
-          print(snapshot.data);
           if (snapshot.data!=null) {
             return NavigationHomeScreen();
           } else {
