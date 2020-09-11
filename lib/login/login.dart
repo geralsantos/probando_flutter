@@ -46,6 +46,7 @@ class _LoginThreePageState extends State<LoginThreePage> {
         Icons.check_circle, Colors.green, "Cargando...", _context);
     loginService(usuario, contrasena).then((onValue) {
       utils.cerrarDialogGlobal(_context);
+      print(onValue);
       if (onValue["status"] != false) {
         var data = onValue["dataUsuario"];
         sharedPrefs.save("dataUsuario", json.encode(data));

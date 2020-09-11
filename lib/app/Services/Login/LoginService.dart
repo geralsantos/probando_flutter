@@ -11,6 +11,7 @@ import 'dart:convert';
       "usuario": usuario.trim(),
       "contrasena": password.trim(),
     });
+    print(response.body);
       return json.decode(response.body);
       /*if (response.statusCode == 200) {
         return json.decode(response.body);
